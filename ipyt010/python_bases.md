@@ -135,14 +135,13 @@ print(var1)
 >>> 22
 ```
 
-## 4-Les types
+## 4-Les types de données
 
 Les principaux types de données en Python sont les suivant:
 - **int**: les entiers
 - **float**: les réels
 - **complex**: les complexes
-
-Il existe également les chaînes de caractères str (cf point 5).
+- **bool**: les booléens prennent les valeurs `True` ou `False`
 
 ```Python
 # Integers
@@ -172,6 +171,14 @@ c2 = 0.+27j
 c3 = 56.+0j
 print(c1, c2, c3)
 >>> (1+4j) 27j (56+0j)
+```
+
+```Python
+# Bool
+vrai = True
+faux = False
+print(vrai, faux)
+>>> True False
 ```
 
 ## 5-Les chaînes de caractères
