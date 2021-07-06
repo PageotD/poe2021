@@ -182,3 +182,26 @@ print(vrai, faux)
 ```
 
 ## 5-Les chaînes de caractères
+
+Les chaînes de caractères (**str**) sont des objets très utilisés et _Python_ fournit de nombreux outils pour les manipuler. Les chaînes de caractères peuvent être définies à l'aide de guillemets simples ou doubles.
+
+```python
+chaine1 = 'Hello world! (1)'
+chaine1 = "Hello world! (2)"
+print(chaine1)
+>>> Hello world (1)!
+print(chaine2)
+>>> Hello world (2)!
+```
+
+Les chaînes de caractères supportent les caractères d'échappement, par exemple `\"`, et les sauts de ligne `\n`.
+
+```python
+chaine1 = 'Afficher guillemets \"'
+chaine2 = 'Saut de ligne \n nouvelle ligne.'
+print(chaine1)
+>>> Afficher guillemets "
+print(chaine2)
+>>> Saut de ligne
+>>> Nouvelle ligne
+```
