@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Les commandes essentielles</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href=".//pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Les commandes essentielles</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#ls">ls</a></li>
+<li><a href="#cd">cd</a></li>
+<li><a href="#pwd">pwd</a></li>
+<li><a href="#mkdir">mkdir</a></li>
+<li><a href="#rmdir">rmdir</a></li>
+<li><a href="#touch">touch</a></li>
+<li><a href="#rm">rm</a></li>
+<li><a href="#manuel">Manuel</a>
+<ul>
+<li><a href="#man">man</a></li>
+<li><a href="#apropos">apropos</a></li>
+<li><a href="#help">help</a></li>
+</ul></li>
+<li><a href="#alias">alias</a></li>
+<li><a href="#bashrc">.bashrc</a></li>
+<li><a href="#rm-1">rm</a></li>
+<li><a href="#cp">cp</a></li>
+<li><a href="#mv">mv</a></li>
+<li><a href="#processus">Processus</a>
+<ul>
+<li><a href="#ps">ps</a></li>
+<li><a href="#kill">kill</a></li>
+<li><a href="#fg-bg-et-ctrlz">fg / bg et <kbd>Ctrl</kbd><kbd>Z</kbd></a></li>
+<li><a href="#esperluète-pour-lancer-un-programme-en-arrière-plan"><code>&amp;</code> esperluète pour lancer un programme en arrière plan</a></li>
+</ul></li>
+<li><a href="#gestion-des-paramètres">Gestion des paramètres</a></li>
+<li><a href="#glob-expansion-des-paramètres">glob / expansion des paramètres</a></li>
+<li><a href="#cat">cat</a></li>
+<li><a href="#liens-symboliques">Liens symboliques</a></li>
+<li><a href="#redirections">Redirections</a>
+<ul>
+<li><a href="#sorties">Sorties</a></li>
+<li><a href="#redirection-vers-un-fichier">Redirection vers un fichier</a></li>
+<li><a href="#redirections-entre-programmes">Redirections entre programmes</a></li>
+<li><a href="#grep">grep</a></li>
+<li><a href="#head">head</a></li>
+<li><a href="#tail">tail</a></li>
+<li><a href="#awk">awk</a></li>
+</ul></li>
+<li><a href="#find"><code>find</code></a></li>
+<li><a href="#interrompre-une-commande">Interrompre une commande</a></li>
+<li><a href="#savoir-rendre-un-programme-exécutable">Savoir rendre un programme exécutable</a></li>
+<li><a href="#commandes-dont-ils-faut-se-souvenir-de-lexistence">Commandes dont ils faut se souvenir de l’existence</a></li>
+<li><a href="#webographie">Webographie</a></li>
+</ul>
+</nav>
+<div class="shortcut">
+<p><a href="#top">Sommaire</a></p>
+<p><a href="./index.html">Index</a></p>
+</div>
+<h1 id="introduction">Introduction</h1>
+<p>Ceci est un résumé (sans commentaire) des commandes à connaître absolument sous GNU/Linux</p>
+<h1 id="ls">ls</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-F</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-A</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ld</span></span></code></pre></div>
+<h1 id="cd">cd</h1>
+<p>cd chemin absolu</p>
+<p>chemin relatif</p>
+<p>cd</p>
+<p>cd -</p>
+<h1 id="pwd">pwd</h1>
+<h1 id="mkdir">mkdir</h1>
+<p>mkdir -p</p>
+<h1 id="rmdir">rmdir</h1>
+<h1 id="touch">touch</h1>
+<h1 id="rm">rm</h1>
+<h1 id="manuel">Manuel</h1>
+<h2 id="man">man</h2>
+<p>Et comment chercher dans le manuel (Voir la page sur la commande<a href="less.html">less</a>)</p>
+<h2 id="apropos">apropos</h2>
+<h2 id="help">help</h2>
+<h1 id="alias">alias</h1>
+<p>Créer un alias</p>
+<p>Supprimer un alias (unalias)</p>
+<p>Désactiver temporairement un alias (<code>\rm</code>)</p>
+<h1 id="bashrc">.bashrc</h1>
+<p>$PATH $HOME</p>
+<p>Ajouter les alias aux commandes rm, cp , mv</p>
+<h1 id="rm-1">rm</h1>
+<h1 id="cp">cp</h1>
+<p>cp -r</p>
+<p>cp -p</p>
+<h1 id="mv">mv</h1>
+<h1 id="processus">Processus</h1>
+<h2 id="ps">ps</h2>
+<p>ps -f ps -lf</p>
+<p>ps -elf | grep bash</p>
+<h2 id="kill">kill</h2>
+<h2 id="fg-bg-et-ctrlz">fg / bg et <kbd>Ctrl</kbd><kbd>Z</kbd></h2>
+<h2 id="esperluète-pour-lancer-un-programme-en-arrière-plan"><code>&amp;</code> esperluète pour lancer un programme en arrière plan</h2>
+<h1 id="gestion-des-paramètres">Gestion des paramètres</h1>
+<p>Avec ou sans les guillemets</p>
+<h1 id="glob-expansion-des-paramètres">glob / expansion des paramètres</h1>
+<p>Surtout avec le caractère <code>*</code></p>
+<h1 id="cat">cat</h1>
+<p>Au moins savoir qu’elle existe et ses effets</p>
+<h1 id="liens-symboliques">Liens symboliques</h1>
+<p>Avec les chemins absolus / relatifs</p>
+<h1 id="redirections">Redirections</h1>
+<h2 id="sorties">Sorties</h2>
+<ul>
+<li>sortie standard</li>
+<li>sortie d’erreur</li>
+</ul>
+<h2 id="redirection-vers-un-fichier">Redirection vers un fichier</h2>
+<ul>
+<li><code>&gt;</code></li>
+<li><code>&gt;&gt;</code></li>
+</ul>
+<p>Utilisation de <code>/dev/null</code></p>
+<p>Utilisation d’un file descriptor pour désigner la sortie standard</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> bonjour hello <span class="op">&gt;</span> sortie <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> bonjour hello <span class="op">&gt;&gt;</span> sortie <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
+<h2 id="redirections-entre-programmes">Redirections entre programmes</h2>
+<p>Pipe : <code>|</code></p>
+<h2 id="grep">grep</h2>
+<h2 id="head">head</h2>
+<h2 id="tail">tail</h2>
+<h2 id="awk">awk</h2>
+<h1 id="find"><code>find</code></h1>
+<h1 id="interrompre-une-commande">Interrompre une commande</h1>
+<p><kbd>Ctrl</kbd><kbd>C</kbd></p>
+<h1 id="savoir-rendre-un-programme-exécutable">Savoir rendre un programme exécutable</h1>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x nom_fichier</span></code></pre></div>
+<h1 id="commandes-dont-ils-faut-se-souvenir-de-lexistence">Commandes dont ils faut se souvenir de l’existence</h1>
+<p>screen</p>
+<p>cut</p>
+<p>awk</p>
+<h1 id="webographie">Webographie</h1>
+<p><a href="https://doc.ubuntu-fr.org/tutoriel/console_commandes_de_base">Les commandes de base du terminal GNU/Linux</a></p>
+<script src="guide.js"></script>
+</body>
+</html>

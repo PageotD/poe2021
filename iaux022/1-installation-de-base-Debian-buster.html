@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Installation d’un serveur Debian</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href=".//pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Installation d’un serveur Debian</div>
+<nav id="TOC">
+<ul>
+<li><a href="#installation-de-base-sur-un-serveur-debian">Installation de base sur un serveur Debian</a>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+</ul></li>
+<li><a href="#procédure-dinstallation">Procédure d’installation</a>
+<ul>
+<li><a href="#installation-en-mode-texte">Installation en mode texte</a></li>
+<li><a href="#choix-de-la-localisation">Choix de la localisation</a></li>
+<li><a href="#définition-du-réseau">Définition du réseau</a></li>
+<li><a href="#définition-des-utilisateurs">Définition des utilisateurs</a></li>
+<li><a href="#partionnement-des-disques">Partionnement des disques</a></li>
+<li><a href="#configuration-du-gestionnaire-de-paquets">Configuration du gestionnaire de paquets</a></li>
+<li><a href="#popularity-contest">Popularity contest</a></li>
+<li><a href="#utilisation-de-tasksel">Utilisation de <code>tasksel</code></a></li>
+<li><a href="#installation-du-gestionnaire-de-démarrage">Installation du gestionnaire de démarrage</a></li>
+</ul></li>
+<li><a href="#après-linstallation">Après l’installation</a>
+<ul>
+<li><a href="#mise-à-jour-apt">Mise à jour <code>apt</code></a>
+<ul>
+<li><a href="#message-derreur-apt">Message d’erreur <code>apt</code></a></li>
+</ul></li>
+<li><a href="#installation-sudo">Installation sudo</a></li>
+<li><a href="#gestion-du-réseau">Gestion du réseau</a></li>
+<li><a href="#configuration-du-gestionnaire-de-paquets-1">Configuration du gestionnaire de paquets</a>
+<ul>
+<li><a href="#mise-à-jour-des-sources">Mise à jour des sources</a></li>
+<li><a href="#mise-à-jour-apt-1">Mise à jour apt</a></li>
+<li><a href="#pour-les-systèmes-installés-à-partir-des-dvd">Pour les systèmes installés à partir des DVD</a></li>
+</ul></li>
+<li><a href="#installation-ne">Installation ne</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arrêt-du-système">Arrêt du système</a>
+<ul>
+<li><a href="#commande-darrêt">Commande d’arrêt</a>
+<ul>
+<li><a href="#alternative">Alternative</a></li>
+</ul></li>
+<li><a href="#commande-de-redémarrage">Commande de redémarrage</a>
+<ul>
+<li><a href="#alternative-1">Alternative</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<div class="shortcut">
+<p><a href="#top">Sommaire</a></p>
+<p><a href="./index.html">Index</a></p>
+</div>
+<h1 id="installation-de-base-sur-un-serveur-debian">Installation de base sur un serveur Debian</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Ceci montre les étapes principales permettant de configurer un serveur Debian. Ces éléments permettent notamment de gérer un serveur avec la commande <code>sudo</code> et d’installer un éditeur de texte plus pratique que <code>nano</code>.</p>
+<div class="information">
+<p>Avant de commencer l’installation, <strong>bien lire</strong> le paragraphe qui suit. Il donne des instructions importantes.</p>
+</div>
+<h1 id="procédure-dinstallation">Procédure d’installation</h1>
+<h2 id="installation-en-mode-texte">Installation en mode texte</h2>
+<div class="information">
+<p>Afin d’accélérer l’installation du serveur, il est important de lancer une installation en mode texte.</p>
+</div>
+<p>Sur la fenêtre de démarrage du DVD (image ci-dessous), <strong>on choisira <code>Install</code></strong> (et non <code>Graphical Intall</code>).</p>
+<figure>
+<img src="images/debian/install-01.png" alt="Sélection du mode texte pour l’installation" /><figcaption aria-hidden="true">Sélection du mode texte pour l’installation</figcaption>
+</figure>
+<h2 id="choix-de-la-localisation">Choix de la localisation</h2>
+<div class="information">
+<p>Afin de faciliter la recherche de pannes, il est recommandé d’utiliser l’anglais comme langue du système. En effet, la plupart des sites et forums sont en langue anglaise.</p>
+<p>Dans ce paragraphe, la langue, la disposition du clavier et la position géographique (nécessaire pour déterminer le fuseau horaire) seront définis.</p>
+</div>
+<p>Sur la première fenêtre, sélectionner <code>English</code>:</p>
+<figure>
+<img src="images/debian/install-02.png" alt="Choix de la langue principale du système" /><figcaption aria-hidden="true">Choix de la langue principale du système</figcaption>
+</figure>
+<p>Choisir ensuite l’Europe (éventuellement, choisir <code>Other</code> si <code>Europe</code> n’apparait pas dans la liste) :</p>
+<figure>
+<img src="images/debian/install-04.png" alt="Choix du continent" /><figcaption aria-hidden="true">Choix du continent</figcaption>
+</figure>
+<p>Choisir le pays (France):</p>
+<figure>
+<img src="images/debian/install-05.png" alt="Choix du pays" /><figcaption aria-hidden="true">Choix du pays</figcaption>
+</figure>
+<p>Choisir la <code>locale</code>, ici <code>en_US.UTF-8</code>:</p>
+<div class="information">
+<p><code>locale</code> est un terme informatique qui désigne la langue et l’encodage des caractères utilisés par les programmes du système.</p>
+</div>
+<figure>
+<img src="images/debian/install-06.png" alt="Choix de la localisation" /><figcaption aria-hidden="true">Choix de la localisation</figcaption>
+</figure>
+<p>Choisir la disposition du clavier:</p>
+<figure>
+<img src="images/debian/install-07.png" alt="Disposition du clavier" /><figcaption aria-hidden="true">Disposition du clavier</figcaption>
+</figure>
+<h2 id="définition-du-réseau">Définition du réseau</h2>
+<div class="information">
+<p>Ici, on va choisir le nom de la machine. Celui-ci peut être différent du nom réseau, même si ce n’est pas recommandé</p>
+</div>
+<p>Choisir un nom de machine correspondant à votre besoin:</p>
+<figure>
+<img src="images/debian/install-08.png" alt="Choix du nom de la machine" /><figcaption aria-hidden="true">Choix du nom de la machine</figcaption>
+</figure>
+<p>Choisir le nom de domaine dans lequel la machine sera positionné:</p>
+<figure>
+<img src="images/debian/install-10.png" alt="Choix du nom de domaine" /><figcaption aria-hidden="true">Choix du nom de domaine</figcaption>
+</figure>
+<h2 id="définition-des-utilisateurs">Définition des utilisateurs</h2>
+<div class="information">
+<p>Dans ce paragraphe, on définit le mot de passe <code>root</code> (choisir un mot de passe <strong>sûr</strong>) et le nom du premier utilisateur de la machine.</p>
+</div>
+<p>Saisir le mot de passe <code>root</code> :</p>
+<figure>
+<img src="images/debian/install-11.png" alt="Choix du mot de passe" /><figcaption aria-hidden="true">Choix du mot de passe</figcaption>
+</figure>
+<p>Saisir une seconde fois le mot de passe <code>root</code>.</p>
+<p>Choisir un nom d’utilisateur approprié pour votre machine. Par exemple: <code>superviseur</code></p>
+<p>Définir le mot de passe de cet utilisateur.</p>
+<h2 id="partionnement-des-disques">Partionnement des disques</h2>
+<div class="information">
+<p>Le partionnement des disques dépend des besoins du SI. En général, on positionne <code>/home</code> sur un lecteur réseau.</p>
+<p>Dans notre cas, nous allons rester sur un partionnement simple (une seule partition).</p>
+</div>
+<p>Choisir le schéma de partionnement “<code>Guided - use entire disk</code>”:</p>
+<figure>
+<img src="images/debian/install-12.png" alt="Choix du partitionnement" /><figcaption aria-hidden="true">Choix du partitionnement</figcaption>
+</figure>
+<p>Sélectionner le disque (il n’y en a qu’un ici):</p>
+<figure>
+<img src="images/debian/install-13.png" alt="Sélection du disque" /><figcaption aria-hidden="true">Sélection du disque</figcaption>
+</figure>
+<p>Sélectionner ensuite un partitionnement avec partition unique:</p>
+<figure>
+<img src="images/debian/install-14.png" alt="Choix du partionnement (2)" /><figcaption aria-hidden="true">Choix du partionnement (2)</figcaption>
+</figure>
+<p>Confirmer le partionnement:</p>
+<figure>
+<img src="images/debian/install-15.png" alt="Confirmation" /><figcaption aria-hidden="true">Confirmation</figcaption>
+</figure>
+<p>Écrire les modification sur le disque (sélectionner <code>Yes</code>):</p>
+<figure>
+<img src="images/debian/install-16.png" alt="Écriture des modifications" /><figcaption aria-hidden="true">Écriture des modifications</figcaption>
+</figure>
+<h2 id="configuration-du-gestionnaire-de-paquets">Configuration du gestionnaire de paquets</h2>
+<div class="information">
+<p>Le gestionnaire de paquets permet de gérer l’installation des programmes et services.</p>
+<p>Ce paragraphe permet de configurer la mise à jour de ces paquets.</p>
+</div>
+<p>Lors d’une installation à partir du DVD, celui-ci contient les paquets nécessaires à l’installation.</p>
+<figure>
+<img src="images/debian/install-17.png" alt="Confirmation du scan du DVD" /><figcaption aria-hidden="true">Confirmation du scan du DVD</figcaption>
+</figure>
+<p>Sélectionner <code>No</code> dans la fenêtre précédente.</p>
+<p>Sélectionner ensuite <code>Yes</code> pour configurer le miroir du gestionnaire de paquets:</p>
+<figure>
+<img src="images/debian/install-18.png" alt="Création du miroir" /><figcaption aria-hidden="true">Création du miroir</figcaption>
+</figure>
+<p>Sélectionner ensuite un miroir situé près de votre position géographique (par exemple <code>ftp.fr.debian.org</code>).</p>
+<h2 id="popularity-contest">Popularity contest</h2>
+<p>Répondre <code>No</code> dans la fenêtre suivante:</p>
+<figure>
+<img src="images/debian/install-18.png" alt="Popularity contest" /><figcaption aria-hidden="true">Popularity contest</figcaption>
+</figure>
+<!-- START_OF_INCLUDE: tasksel.md #shift=1-->
+<h2 id="utilisation-de-tasksel">Utilisation de <code>tasksel</code></h2>
+<div class="important">
+<p>Lisez bien ce paragraphe <strong>jusqu’au bout avant d’appuyer sur la moindre touche</strong> et éviter ainsi d’avoir à repartir du début.</p>
+</div>
+<p>A la fin de l’installation, vous verrez apparaître la fenêtre suivante:</p>
+<figure>
+<img src="images/debian/install-20.png" alt="Task Selector Debian" /><figcaption aria-hidden="true">Task Selector Debian</figcaption>
+</figure>
+<p>Cet fenêtre peut être affichée après la fin de l’installation depuis la ligne de commande :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tasksel</span></span></code></pre></div>
+<p><strong>Instructions d’utilisation</strong></p>
+<ul>
+<li>Sélectionner une ligne avec les flèches <kbd>↑</kbd> et <kbd>↓</kbd></li>
+<li>Cocher/décocher avec la barre <kbd>Espace</kbd></li>
+<li><strong>Attention</strong> la touche <kbd>↵</kbd> (Entrée) valide directement les choix.</li>
+</ul>
+<div class="information">
+<ul>
+<li>Dé-sélectionner <strong>Debian desktop environment</strong> (avec la barre <kbd>Espace</kbd>)</li>
+<li>Sélectionnez uniquement <code>SSH server</code> et <code>System standard utilities</code></li>
+<li>dé-sélectionner tout le reste</li>
+<li><strong>vérifier</strong> avant d’appuyer sur la touche <code>Entrée</code></li>
+</ul>
+</div>
+<!--   END_OF_INCLUDE: tasksel.md #shift=1-->
+<h2 id="installation-du-gestionnaire-de-démarrage">Installation du gestionnaire de démarrage</h2>
+<div class="information">
+<p>GRUB est indispensable au démarrage de la machine. En cas d’absence, la machine de <em>bootera</em> pas et restera bloquée sur un écran noir.</p>
+</div>
+<p>Sélectionner <code>/dev/sda</code> comme disque cible pour <code>grub</code> :</p>
+<figure>
+<img src="images/debian/install-21.png" alt="Sélection du disque pour GRUB" /><figcaption aria-hidden="true">Sélection du disque pour GRUB</figcaption>
+</figure>
+<h1 id="après-linstallation">Après l’installation</h1>
+<h2 id="mise-à-jour-apt">Mise à jour <code>apt</code></h2>
+<p>Faire une mise à jour d’apt:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> update</span></code></pre></div>
+<!-- START_OF_INCLUDE: base/debian-apt-security.md #shift=2-->
+<h3 id="message-derreur-apt">Message d’erreur <code>apt</code></h3>
+<p>En cas de message de ce type lors d’un <code>apt update</code> (ou <code>apt-get update</code>):</p>
+<pre><code>E: The repository &#39;cdrom://[Debian GNU/Linux 10.3.0 _Buster_ - Official amd64 DVD Binary-1 20200208-12:08] buster Release&#39; does not have a Release file.
+N: Updating from such a repository can&#39;t be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.</code></pre>
+<p>Ajouter <code>[ trusted=yes ]</code> dans <code>/etc/apt/sources.list</code> juste après chaque ligne <code>deb</code> correspondant à un CD-ROM:</p>
+<pre><code>deb [ trusted=yes ] cdrom:[Debian GNU/Linux 10.3.0 _Buster_ - Official amd64 DVD Binary-1 20200208-12:08]/ buster contrib main</code></pre>
+<p>Source: <a href="https://superuser.com/questions/1340855/debian-apt-update-doesnt-allow-dvds">apt get - debian apt update doesn't allow DVD's - Super User</a></p>
+<!--   END_OF_INCLUDE: base/debian-apt-security.md #shift=2-->
+<h2 id="installation-sudo">Installation sudo</h2>
+<p>Sudo permet de prendre les droits super-utilisateur tout en contrôlant finement ces droits. De plus il permet de garder une trace de ces opérations dans les log, ce qui responsabilise les personnes ayant ces droits.</p>
+<p>Ces personnes sont appelées <em>sudoers</em>. Elles le deviennent dès qu’elles sont ajoutées au groupe <code>sudo</code>.</p>
+<p>Pour l’installation, vous devez vous connecter en tant que <code>root</code> :</p>
+<ul>
+<li>soit en vous connectant directement</li>
+<li>soit en utilisant la commande <code>su -</code></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Installation</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt-get</span> install sudo</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Ajout de l&#39;utilisateur au groupe sudo</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">adduser</span> <span class="op">&lt;</span>VOTRE UTILISATEUR<span class="op">&gt;</span> sudo</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> <span class="op">&lt;</span>VOTRE UTILISATEUR<span class="op">&gt;</span> echo bonjour</span></code></pre></div>
+<p>Remplacer <code>&lt;VOTRE UTILISATEUR&gt;</code> par le vrai identifiant de votre utilisateur. Par exemple: <code>paul</code></p>
+<div class="warning">
+<p>Se déconnecter de l’utilisateur <code>root</code>.</p>
+<p>Se déconnecter de l’utilisateur <code>&lt;VOTRE UTILISATEUR&gt;</code>. Ceci est nécessaire pour que <code>&lt;VOTRE UTILISATEUR&gt;</code> soit effectivement ajouté au groupe <code>sudo</code> (il ne le sera pas pour une session déjà ouverte).</p>
+<p>Se reconnecter avec <code>&lt;VOTRE UTILISATEUR&gt;</code>.</p>
+</div>
+<h2 id="gestion-du-réseau">Gestion du réseau</h2>
+<div class="information">
+<p>Par défaut, la configuration de <em>Debian</em> omet le montage automatique de la carte réseau.</p>
+<p>Ceci peut (parfois) empêcher la récupération correcte de l’adresse IP.</p>
+</div>
+<p>Éditer le fichier <code>/etc/network/interfaces</code> :</p>
+<pre class="conf"><code># This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug ens33
+iface ens33 inet dhcp</code></pre>
+<p>Sous la ligne <code>The primary network interface</code>, noter le nom de l’interface (que l’on notera <code>NOM_INTERFACE</code>). Ici: <code>ens33</code></p>
+<p>Sous cette même ligne, ajouter une nouvelle ligne sur le modèle suivant:</p>
+<pre class="conf"><code>auto NOM_INTERFACE</code></pre>
+<p>En prenant l’exemple d’<code>ens33</code>, on devrait obtenir:</p>
+<pre class="conf"><code># The primary network interface
+auto ens33
+allow-hotplug ens33
+iface ens33 inet dhcp</code></pre>
+<p>Ensuite, redémarrer les services réseaux avec la commande suivante :</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart networking</span></code></pre></div>
+<div class="information">
+<p>Ceci est une commande liée à <code>systemd</code>:</p>
+<ul>
+<li><code>systemctl</code> : permet de contrôler les services</li>
+<li><code>restart</code> : commande de redémarrage de service</li>
+<li><code>networking</code> : nom du service à redémarrer</li>
+</ul>
+</div>
+<h2 id="configuration-du-gestionnaire-de-paquets-1">Configuration du gestionnaire de paquets</h2>
+<div class="information">
+<p>Avant de continuer, vérifier la version de votre distribution en examinant le contenu du fichier <code>/etc/os-release</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /etc/os-release</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="va">PRETTY_NAME=</span><span class="st">&quot;Debian GNU/Linux 10 (buster)&quot;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">NAME=</span><span class="st">&quot;Debian GNU/Linux&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">VERSION_ID=</span><span class="st">&quot;10&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="va">VERSION=</span><span class="st">&quot;10 (buster)&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="va">VERSION_CODENAME=</span><span class="st">&quot;buster&quot;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="va">ID=</span>debian</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="va">HOME_URL=</span><span class="st">&quot;https://www.debian.org/&quot;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="va">SUPPORT_URL=</span><span class="st">&quot;https://www.debian.org/support&quot;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="va">BUG_REPORT_URL=</span><span class="st">&quot;https://bugs.debian.org/&quot;</span></span></code></pre></div>
+<p>La ligne <code>VERSION</code> indique le nom de code qui est à reprendre dans le fichier <code>sources.list</code> ci-dessous.</p>
+</div>
+<div class="important">
+<p>Utiliser dans le fichier <code>sources.list</code> uniquement le nom correspondant à votre version de distribution.</p>
+<p>Dans le cas contraire, vous risquez de corrompre totalement votre système.</p>
+</div>
+<h3 id="mise-à-jour-des-sources">Mise à jour des sources</h3>
+<p>Editer le fichier <code>/etc/apt/sources.list</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/apt/sources.list</span></code></pre></div>
+<p>Commenter les lignes commençant par <code>deb http://security.debian.org</code> et <code>deb-src http://security.debian.org/</code></p>
+<p>Rajouter les lignes suivantes (d’après <a href="https://wiki.debian.org/fr/SourcesList">https://wiki.debian.org/fr/SourcesList</a>).</p>
+<pre><code>deb http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+
+deb http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+deb-src http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+
+deb http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free</code></pre>
+<p>Les paquets <code>non-free</code> sont les paquets non libres de droits intellectuels.</p>
+<div class="important">
+<p>Avant de continuer, vérifier que le nom de code dans le fichier <code>sources.list</code> correspond à celui de la version installée.</p>
+</div>
+<h3 id="mise-à-jour-apt-1">Mise à jour apt</h3>
+<p>Ceci permet de mettre à jour la base de données locale des dépendances. À faire avant toute nouvelle installation si vous ne l’avez pas fait dans les dernières 24h.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span></code></pre></div>
+<h3 id="pour-les-systèmes-installés-à-partir-des-dvd">Pour les systèmes installés à partir des DVD</h3>
+<p>Si vous avez installé votre système à partir des DVD, vous devez réaliser les opérations précédentes lorsque vous n’avez pas configurer les miroirs (<em>apt mirror</em>) au moment de l’installation. Il n’est pas nécessaire de refaire ces opérations <strong>sauf si vous souhaitez ajouter les paquets <code>non-free</code> (non libres)</strong>.</p>
+<p>Plus d’informations sont disponibles sur les fichiers <code>sources.list</code> sur le site de <code>Debian</code> en faisant attention à l’identifiant de version Debian (<code>Buster</code>, <code>Stretch</code>, …) : <a href="https://wiki.debian.org/fr/SourcesList">https://wiki.debian.org/fr/SourcesList</a> (faire une recherche avec les mots : <code>debian apt source</code>)</p>
+<h2 id="installation-ne">Installation ne</h2>
+<p><code>ne</code> (Nice Editor) est un éditeur de texte ayant une ergonomie plus simple pour les personnes peu habituées à Linux. Ce paragraphe illustre l’installation de <code>ne</code> ou de n’importe quel autre paquet.</p>
+<h3 id="installation">Installation</h3>
+<p>L’installation du paquet proprement dite se fait avec la commande suivante:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ne</span></code></pre></div>
+<h1 id="arrêt-du-système">Arrêt du système</h1>
+<h2 id="commande-darrêt">Commande d’arrêt</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> shutdown <span class="at">-h</span> now</span></code></pre></div>
+<h3 id="alternative">Alternative</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> halt</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Parfois, elle ne stoppe pas l&#39;alimentation électrique de la machine</span></span></code></pre></div>
+<h2 id="commande-de-redémarrage">Commande de redémarrage</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> shutdown <span class="at">-r</span> now</span></code></pre></div>
+<h3 id="alternative-1">Alternative</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<script src="guide.js"></script>
+</body>
+</html>

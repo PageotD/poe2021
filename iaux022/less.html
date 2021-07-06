@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Commande less</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href=".//pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Commande less</div>
+<nav id="TOC">
+<ul>
+<li><a href="#commande-less">Commande <code>less</code></a></li>
+</ul>
+</nav>
+<div class="shortcut">
+<p><a href="#top">Sommaire</a></p>
+<p><a href="./index.html">Index</a></p>
+</div>
+<h1 id="commande-less">Commande <code>less</code></h1>
+<p>La commande <code>less</code> permet en plus de naviguer dans le fichier. Les touches usuelles dans cette commande sont:</p>
+<ul>
+<li><code>q</code> : quitter</li>
+<li><code>u</code> : remonter d’une page</li>
+<li><code>d</code> : descendre d’une page</li>
+<li>flèches haut/bas: monter/descendre</li>
+<li><code>g</code> : aller au début du fichier</li>
+<li><code>G</code> (<kbd>⇧</kbd><kbd>g</kbd>): aller à la fin du fichier</li>
+<li><code>/</code> : chercher une chaîne (taper ensuite la chaîne à rechercher puis <kbd>↵</kbd>)
+<ul>
+<li><code>n</code> : aller à l’occurrence de recherche suivante</li>
+<li><code>N</code> (<kbd>⇧</kbd><kbd>n</kbd>): aller à l’occurrence de recherche précédente</li>
+</ul></li>
+</ul>
+<div class="information">
+<p><strong>EXEMPLE</strong></p>
+<p>Exécuter la commande <code>less /etc/passwd</code></p>
+<ul>
+<li>Presser <kbd>/</kbd></li>
+<li>Saisir <code>bash</code></li>
+<li>Presser <kbd>↵</kbd> (une première occurence est trouvée)</li>
+<li>Presser <kbd>n</kbd> (l’occurrence suivante est sélectionnée)</li>
+<li>Presser <kbd>⇧</kbd><kbd>n</kbd> (l’occurrence précédente est sélectionnée)</li>
+</ul>
+</div>
+<ul>
+<li><code>-I</code> puis <kbd>↵</kbd>: respecte la casse dans les recherche</li>
+<li><code>-i</code> puis <kbd>↵</kbd>: ignore la casse dans les recherche</li>
+<li><code>-OPTION</code> puis <kbd>↵</kbd>: active l’option OPTION désignée par une lettre (voir <code>man less</code>)</li>
+</ul>
+<script src="guide.js"></script>
+</body>
+</html>
