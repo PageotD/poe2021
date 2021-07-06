@@ -1,6 +1,5 @@
 # Guide POE CapGemini 2021-06
 
-
 ## Installation de GNU/Linux
 - Création de VM sous VMWare
 - Guide d’installation d’un serveur basique
