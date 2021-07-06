@@ -208,10 +208,39 @@ print(chaine2)
 
 Il est également possible de concatener des chaînes de caractères à l'aide de l'opérateur `+`. Les autres opérateurs ne sont pas utilisables entre chaînes de caractères. On ne peut concatener une chaîne de caractères qu'avec une autre chaîne de caractères.
 
-````Python
+```Python
 chaine1 = "Hello "
 chaine2 = "world!"
 chaine_tot = chaine1 + chaine2
 print(chaine_tot)
 >>> Hello world!
+```
+
+## 6-Les conversions de type
+
+En _Python_, il est possible de passer d'un type de données à un autre par conversion. Pour cela, on utilise des fonctions qui ont le nom du type cible(`int()`, `float()`, `complex()` et `str()`).
+
+```Python
+var_float = 1.0 # c'est un float
+var_int = int(var_float) # On converti vers le type int
+
+var_float2 = float(var_int) # On converti vers le type float
+
+chaine1 = '12'
+chaine_to_int = int(chaine1)
+
+var_int = 12
+int_to_chaine = str(var_int)
+
+annee = 2021
+chaine = "Nous sommes dans la POE de "+str(annee)+"."
+print(chaine)
+>>> Nous sommes dans la POE de 2021.
+```
+
+Attention, il n'est pas possible de convertir n'importe quel type vers n'importe quel autre.
+L'exemple ci-dessous renverra une erreur.
+
+```Python
+var_float = float("Hello world!")
 ```
