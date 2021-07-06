@@ -16,6 +16,46 @@ Dans le document, le triple chevron `>>>` indique la sortie attendue.
 
 - _Python 2_ n'est plus maintenu depuis Janvier 2020, ce sont donc les versions _Python 3.X_ qu'il faut utiliser.
 
+## Structure
+
+_Python_ utilise l'indetation pour délimiter les blocs de contrôle et les boucles. Cela permet une meilleure lisibilité mais il faut cependant faire attention à l'alignement des différents blocs: un déséquilabrage entraînera soit une erreur, soit un résultat non-souhaité.
+
+```Python
+def fonctionA():
+    # On met ici des commentaires ou instructions
+    # Ici aussi
+    # Et pourquoi pas là
+    # Et on va faire une boucle
+    for i in range(0, n):
+        # On met ici des commentaires ou instructions
+        # Ici aussi
+        # Et pourquoi pas là
+        # Et on ressort de la boucle en décalant l'indentation sur la gauche
+    print("On est sorti de la boucle mais on est toujours dans la fonction A")
+
+# En s'alignant avec def fonctionA, on ressort de fonctionA
+# On peut commencer une nouvelle fonction    
+def fonctionB():
+    # On met ici des commentaires ou instructions
+    # Ici aussi
+    # Et pourquoi pas là
+```
+
+Les **commentaires** en _Python_ sont très simples. Toute ligne commencant par un `#` est une ligne de commentaire (cf exemple ci-dessus).
+
+Les **docstring** en _Python_ sont des commentaires dédiés à la documentation de code. A ce titre, ils n'utilisent pas les `#` mais des triples quotes `'''`
+
+```Python
+def fonctionA():
+    '''
+    Ceci est la fonctionA. Elle sert d'exemple et à rien d'autre.
+    '''
+    # On met ici des commentaires ou instructions
+    # Ici aussi
+    # Et pourquoi pas là
+    # Et on va faire une boucle
+```
+
 ## 1-Hello World!
 
 Comparé à d'autres langages de programmation, le Python est relativement simple. L'exemple typique consistant à afficher le message "Hello world!" est produit avec la ligne de code suivante:
