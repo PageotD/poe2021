@@ -131,7 +131,9 @@ Python suit les priorités classiques des mathématiques i.e, les multiplication
 >>> 9
 ```
 
-## 3-Les variables
+## 3-Variables et types
+
+### 3.1-variables
 
 Une variable est un emplacement mémoire auquel on attache un nom qui permettra de facilement y accéder. En Python, on préfèrera des noms de variables le plus explicite possible et en minuscules.
 
@@ -181,7 +183,7 @@ print(var1)
 >>> 22
 ```
 
-## 4-Les types de données
+## 3.2-Les types de données
 
 Les principaux types de données en Python sont les suivant:
 - **int**: les entiers
