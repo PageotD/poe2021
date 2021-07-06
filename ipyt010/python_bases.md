@@ -48,13 +48,19 @@ Les **docstring** en _Python_ sont des commentaires dédiés à la documentation
 ```Python
 def fonctionA():
     '''
-    Ceci est la fonctionA. Elle sert d'exemple et à rien d'autre.
+    Ceci est une description de la fonctionA.
+    Elle sert d'exemple.
+    Et à rien d'autre.
+
+    C'est pourquoi il n'y a que des commentaires.
     '''
     # On met ici des commentaires ou instructions
     # Ici aussi
     # Et pourquoi pas là
     # Et on va faire une boucle
 ```
+
+En général, on tendra à écrire les commentaires sur une seule ligne, ou du moins à ajouter un `#` à chaque ligne de commentaire. Les **docstring** en revanche sont fait pour permettre d'écrire plusieurs lignes entre les triples quotes.
 
 ## 1-Hello World!
 
