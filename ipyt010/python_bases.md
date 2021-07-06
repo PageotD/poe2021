@@ -345,3 +345,27 @@ finally:
     # toujours executé qu'il y ait une erreur ou non
     print("On a terminé.")
 ```
+
+## 7.4-Les instructions `break` et `continue`
+
+Les instructions `break` et `continue` ajoutent un niveau de contrôle sur les boucles.
+
+La commande `break` va casser la boucle et en sortir. La commande `continue` va mettre fin à l'itération en cours et faire passer directement à l'itération suivante.
+
+```Python
+for i in range(10):
+    if i*i > 10:
+        # On sort de la boucle for si i*i est supérieur à 10
+        print("i*i inférieur à 10")
+        break
+```
+
+```Python
+for i in range(10):
+    if i*i < 10:
+        # On continue tant que i*i inférieur à 10
+        continue
+    # Continue renvoie à for tant que i*i < 10
+    # Sinon on passe à la suite
+    print("i*i supérieur à 10.")
+```
