@@ -205,3 +205,13 @@ print(chaine2)
 >>> Saut de ligne
 >>> Nouvelle ligne
 ```
+
+Il est également possible de concatener des chaînes de caractères à l'aide de l'opérateur `+`. Les autres opérateurs ne sont pas utilisables entre chaînes de caractères. On ne peut concatener une chaîne de caractères qu'avec une autre chaîne de caractères.
+
+````Python
+chaine1 = "Hello "
+chaine2 = "world!"
+chaine_tot = chaine1 + chaine2
+print(chaine_tot)
+>>> Hello world!
+```
