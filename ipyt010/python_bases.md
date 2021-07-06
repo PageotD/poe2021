@@ -1,6 +1,20 @@
 # Python: Les bases
 
-_Dans le document, le triple chevron `>>>` indique la sortie attendue._
+```
+Dans le document, le triple chevron `>>>` indique la sortie attendue.
+```
+
+## En bref
+
+- Python a été créé en 1990 par Guido van Rossum. Il a écrit la première version du langage lors d'une semaine devacances durant les fêtes de Noël de 1989. Grand amateur des _Monty Python_, il décide de nommer son langage _Python_.
+
+- _Python_ est un langage interprété et dynamiquement typé: il n'est pas compilé et il détermine, à la volée, les types associés aux variables et aux objets.
+
+- _Python_ utilise l'indentation pour organiser les blocs de code et créer un code lisible.
+
+- _Python_ vient avec un ensemble de modules (librairie standard) extrêmement importante et variée dans les applications (math, parseur xml, mesure du temps, contrôle du système d'exploitation, hashage etc.).
+
+- _Python 2_ n'est plus maintenu depuis Janvier 2020, ce sont donc les versions _Python 3.X_ qu'il faut utiliser.
 
 ## 1-Hello World!
 
