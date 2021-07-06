@@ -290,3 +290,58 @@ L'exemple ci-dessous renverra une erreur.
 ```Python
 var_float = float("Hello world!")
 ```
+
+## 7-Conditions, boucles et exceptions
+
+## 7.1-Conditions
+
+En _Python_, les conditions sont définies par les mots clés `if`, `elif` et `else`.
+
+```python
+if(condition1_est_vraie):
+  # Faire ceci
+elif(condition2_est_vraie):
+  # Faire celà
+else:
+  # Faire autre chose
+```
+
+## 7.2-Boucles
+
+Il existe deux types de boucles en _Python_: `for` et `While`.
+
+Les boucles `for` permettent de répéter une séquence d'instructions un certains nombre de fois (prédéfini). Par exemple, répéter 10 fois une séquence:
+
+```python
+for i in range(10):
+    # Faire quelque chose
+    # Faire autre chose
+```
+
+Les boucles `while` permettent de répéter de manière conditionnelle (condition booléenne) une séquence d'instructions.
+
+```Python
+while(condition_est_vrai):
+    # Faire quelque chose
+    # Faire autre chose
+    # Si la condition devient fausse, on sort d ela boucle
+```
+
+## 7.3-Les exceptions
+
+_Python_ permet de tester des opérations et de "capter" les erreurs qui pourraient survenir. Cela découle tout droit du principe "Easier to ask for forgiveness than permission (EAFP)".
+
+```python
+try:
+    # On essaie de convertir une variable en entier
+    int_var = int(var)
+except ValueError:
+    # Ici les instructions si le 'try' a levé une erreur
+    print("On ne peut pas convertir la variable en entier.")
+else:
+    # code executé si try a fonctionné
+    print("On a converti la variable en entier.")
+finally:
+    # toujours executé qu'il y ait une erreur ou non
+    print("On a terminé.")
+```
