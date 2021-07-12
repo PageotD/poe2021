@@ -1,6 +1,18 @@
 # Python: Les bases
 
-## En bref
+Contenu
+- [En bref](#en_bref)
+- [Structure](#structure)
+- [Hello world!](#hello_world)
+- [Les opérateurs](#operateurs)
+- [Les Variables et les types](#variables_types)
+- [Les chaînes de caractères](#chaines)
+- [Les conversions de type](#conversions)
+- [Conditions, boucles et exceptions](#conditions_boucles_exceptions)
+- [Index et découpage](#index_decoupage)
+- [Le Zen de Python](#zen_python)
+
+## En bref <a name="en_bref"></a>
 
 - Python a été créé en 1990 par Guido van Rossum. Il a écrit la première version du langage lors d'une semaine devacances durant les fêtes de Noël de 1989. Grand amateur des _Monty Python_, il décide de nommer son langage _Python_.
 
@@ -12,7 +24,7 @@
 
 - _Python 2_ n'est plus maintenu depuis Janvier 2020, ce sont donc les versions _Python 3.X_ qu'il faut utiliser.
 
-## Structure
+## Structure <a name="structure"></a>
 
 _Python_ utilise l'indetation pour délimiter les blocs de contrôle et les boucles. Cela permet une meilleure lisibilité mais il faut cependant faire attention à l'alignement des différents blocs: un déséquilabrage entraînera soit une erreur, soit un résultat non-souhaité.
 
@@ -58,7 +70,7 @@ def fonctionA():
 
 En général, on tendra à écrire les commentaires sur une seule ligne, ou du moins à ajouter un `#` à chaque ligne de commentaire. Les **docstring** en revanche sont fait pour permettre d'écrire plusieurs lignes entre les triples quotes.
 
-## Hello World!
+## Hello World! <a name="hello_world"></a>
 
 Comparé à d'autres langages de programmation, le Python est relativement simple. L'exemple typique consistant à afficher le message "Hello world!" est produit avec la ligne de code suivante:
 
@@ -69,7 +81,7 @@ Hello world!
 
 La fonction `print()` utilisée ici est une fonction interne de Python qui permet d'afficher aussi bien du texte (entre quotes) que le contenu des variables.
 
-## Les opérateurs
+## Les opérateurs <a name="operateurs"></a>
 
 Python dispose de tous les opérateurs standards.
 
@@ -127,7 +139,7 @@ Python suit les priorités classiques des mathématiques i.e, les multiplication
 9
 ```
 
-## Variables et types
+## Les variables et les types <a name="variables_types"></a>
 
 ### Variables
 
@@ -227,7 +239,7 @@ Les principaux types de données en Python sont les suivant:
 True False
 ```
 
-## Les chaînes de caractères
+## Les chaînes de caractères <a name="chaines"></a>
 
 Les chaînes de caractères (**str**) sont des objets très utilisés et _Python_ fournit de nombreux outils pour les manipuler. Les chaînes de caractères peuvent être définies à l'aide de guillemets simples ou doubles.
 
@@ -262,7 +274,7 @@ Il est également possible de concatener des chaînes de caractères à l'aide d
 Hello world!
 ```
 
-## Les conversions de type
+## Les conversions de type <a name="conversions"></a>
 
 En _Python_, il est possible de passer d'un type de données à un autre par conversion. Pour cela, on utilise des fonctions qui ont le nom du type cible(`int()`, `float()`, `complex()` et `str()`).
 
@@ -287,7 +299,7 @@ L'exemple ci-dessous renverra une erreur.
 >>> var_float = float("Hello world!")
 ```
 
-## Conditions, boucles et exceptions
+## Conditions, boucles et exceptions <a name="conditions_boucles_exceptions"></a>
 
 ### Conditions
 
@@ -366,7 +378,7 @@ La commande `break` va casser la boucle et en sortir. La commande `continue` va 
 >>>     print("i*i supérieur à 10.")
 ```
 
-## Index et découpage
+## Index et découpage <a name="index_decoupage"></a>
 
 _Python_ permet de créer et de manipuler de nombreux objets qui rentrent dans la catégories des _collections_ tels que les listes, les tuples et les dictionnaires. Un item d'une collection est accessible par son index compris entre _0_ (le premier élément de la collection) et _n-1_ (n étant le nombre max d'éléments dans la collection). Un index négatif indique que le comptage par de la fin de la collection.
 
@@ -415,7 +427,7 @@ _Python_ permet de créer et de manipuler de nombreux objets qui rentrent dans l
 [2,4]
 ```
 
-## Le Zen de Python (Tim Peters)
+## Le Zen de Python (Tim Peters) <a name="zen_python"></a>
 
 ```
 Beautiful is better than ugly.
