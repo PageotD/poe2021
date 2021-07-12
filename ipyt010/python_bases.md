@@ -4,12 +4,12 @@ Contenu
 - [En bref](#en_bref)
 - [Structure](#structure)
 - [Hello world!](#hello_world)
-- [Les opérateurs](#operateurs)
+- [Conditions, boucles et exceptions](#conditions_boucles_exceptions)
 - [Les Variables et les types](#variables_types)
 - [Les chaînes de caractères](#chaines)
-- [Les conversions de type](#conversions)
-- [Conditions, boucles et exceptions](#conditions_boucles_exceptions)
+- [Les opérateurs](#operateurs)
 - [Index et découpage](#index_decoupage)
+- [Les conversions de type](#conversions)
 - [Le Zen de Python](#zen_python)
 
 ## En bref <a name="en_bref"></a>
@@ -81,62 +81,83 @@ Hello world!
 
 La fonction `print()` utilisée ici est une fonction interne de Python qui permet d'afficher aussi bien du texte (entre quotes) que le contenu des variables.
 
-## Les opérateurs <a name="operateurs"></a>
+## Conditions, boucles et exceptions <a name="conditions_boucles_exceptions"></a>
 
-Python dispose de tous les opérateurs standards.
+### Conditions
+
+En _Python_, les conditions sont définies par les mots clés `if`, `elif` et `else`.
+
+```python
+>>> if(condition1_est_vraie):
+>>>   # Faire ceci
+>>> elif(condition2_est_vraie):
+>>>   # Faire celà
+>>> else:
+>>>   # Faire autre chose
+```
+
+### Boucles
+
+Il existe deux types de boucles en _Python_: `for` et `While`.
+
+Les boucles `for` permettent de répéter une séquence d'instructions un certains nombre de fois (prédéfini). Par exemple, répéter 10 fois une séquence:
+
+```python
+>>> for i in range(10):
+>>>     # Faire quelque chose
+>>>     # Faire autre chose
+```
+
+Les boucles `while` permettent de répéter de manière conditionnelle (condition booléenne) une séquence d'instructions.
 
 ```Python
->>> # Addition
->>> 3 + 2
-5
+>>> while(condition_est_vrai):
+>>>     # Faire quelque chose
+>>>     # Faire autre chose
+>>>     # Si la condition devient fausse, on sort d ela boucle
+```
+
+### Les exceptions
+
+_Python_ permet de tester des opérations et de "capter" les erreurs qui pourraient survenir. Cela découle tout droit du principe "Easier to ask for forgiveness than permission (EAFP)".
+
+```python
+>>> try:
+>>>     # On essaie de convertir une variable en entier
+>>>     int_var = int(var)
+>>> except ValueError:
+>>>     # Ici les instructions si le 'try' a levé une erreur
+>>>     print("On ne peut pas convertir la variable en entier.")
+>>> else:
+>>>     # code executé si try a fonctionné
+>>>     print("On a converti la variable en entier.")
+>>> finally:
+>>>     # toujours executé qu'il y ait une erreur ou non
+>>>     print("On a terminé.")
+```
+
+### Les instructions `break` et `continue`
+
+Les instructions `break` et `continue` ajoutent un niveau de contrôle sur les boucles.
+
+La commande `break` va casser la boucle et en sortir. La commande `continue` va mettre fin à l'itération en cours et faire passer directement à l'itération suivante.
+
+```Python
+>>> for i in range(10):
+>>>     if i*i > 10:
+>>>         # On sort de la boucle for si i*i est supérieur à 10
+>>>         print("i*i inférieur à 10")
+>>>         break
 ```
 
 ```Python
->>> # Soustraction
->>> 3 - 2
-1
-```
-
-```Python
->>> # Multiplication
->>> 3 * 2
-6
-```
-
-```Python
->>> # Division
->>> 3 / 2
-1.5
-```
-
-```Python
->>> # Division entière
->>> 3 // 2
-1
-```
-
-```Python
->>> # Modulo
->>> 3 % 2
-1
-```
-
-```Python
->>> # Puissance
->>> 3 ** 2
-9
-```
-
-Python suit les priorités classiques des mathématiques i.e, les multiplications sont prioritaires sur les additions, les opérations entre parenthèses sont prioritaires etc.
-
-```Python
->>> 1 + 2 * 3
-7
-```
-
-```Python
->>> (1 + 2) * 3
-9
+>>> for i in range(10):
+>>>     if i*i < 10:
+>>>         # On continue tant que i*i inférieur à 10
+>>>         continue
+>>>     # Continue renvoie à for tant que i*i < 10
+>>>     # Sinon on passe à la suite
+>>>     print("i*i supérieur à 10.")
 ```
 
 ## Les variables et les types <a name="variables_types"></a>
@@ -274,109 +295,65 @@ Il est également possible de concatener des chaînes de caractères à l'aide d
 Hello world!
 ```
 
-## Les conversions de type <a name="conversions"></a>
+## Les opérateurs <a name="operateurs"></a>
 
-En _Python_, il est possible de passer d'un type de données à un autre par conversion. Pour cela, on utilise des fonctions qui ont le nom du type cible(`int()`, `float()`, `complex()` et `str()`).
-
-```Python
->>> var_float = 1.0 # c'est un float
->>> var_int = int(var_float) # On converti vers le type int
->>> var_float2 = float(var_int) # On converti vers le type float
->>> chaine1 = '12'
->>> chaine_to_int = int(chaine1)
->>> var_int = 12
->>> int_to_chaine = str(var_int)
->>> annee = 2021
->>> chaine = "Nous sommes dans la POE de "+str(annee)+"."
->>> print(chaine)
-Nous sommes dans la POE de 2021.
-```
-
-Attention, il n'est pas possible de convertir n'importe quel type vers n'importe quel autre.
-L'exemple ci-dessous renverra une erreur.
+Python dispose de tous les opérateurs standards.
 
 ```Python
->>> var_float = float("Hello world!")
-```
-
-## Conditions, boucles et exceptions <a name="conditions_boucles_exceptions"></a>
-
-### Conditions
-
-En _Python_, les conditions sont définies par les mots clés `if`, `elif` et `else`.
-
-```python
->>> if(condition1_est_vraie):
->>>   # Faire ceci
->>> elif(condition2_est_vraie):
->>>   # Faire celà
->>> else:
->>>   # Faire autre chose
-```
-
-### Boucles
-
-Il existe deux types de boucles en _Python_: `for` et `While`.
-
-Les boucles `for` permettent de répéter une séquence d'instructions un certains nombre de fois (prédéfini). Par exemple, répéter 10 fois une séquence:
-
-```python
->>> for i in range(10):
->>>     # Faire quelque chose
->>>     # Faire autre chose
-```
-
-Les boucles `while` permettent de répéter de manière conditionnelle (condition booléenne) une séquence d'instructions.
-
-```Python
->>> while(condition_est_vrai):
->>>     # Faire quelque chose
->>>     # Faire autre chose
->>>     # Si la condition devient fausse, on sort d ela boucle
-```
-
-### Les exceptions
-
-_Python_ permet de tester des opérations et de "capter" les erreurs qui pourraient survenir. Cela découle tout droit du principe "Easier to ask for forgiveness than permission (EAFP)".
-
-```python
->>> try:
->>>     # On essaie de convertir une variable en entier
->>>     int_var = int(var)
->>> except ValueError:
->>>     # Ici les instructions si le 'try' a levé une erreur
->>>     print("On ne peut pas convertir la variable en entier.")
->>> else:
->>>     # code executé si try a fonctionné
->>>     print("On a converti la variable en entier.")
->>> finally:
->>>     # toujours executé qu'il y ait une erreur ou non
->>>     print("On a terminé.")
-```
-
-### Les instructions `break` et `continue`
-
-Les instructions `break` et `continue` ajoutent un niveau de contrôle sur les boucles.
-
-La commande `break` va casser la boucle et en sortir. La commande `continue` va mettre fin à l'itération en cours et faire passer directement à l'itération suivante.
-
-```Python
->>> for i in range(10):
->>>     if i*i > 10:
->>>         # On sort de la boucle for si i*i est supérieur à 10
->>>         print("i*i inférieur à 10")
->>>         break
+>>> # Addition
+>>> 3 + 2
+5
 ```
 
 ```Python
->>> for i in range(10):
->>>     if i*i < 10:
->>>         # On continue tant que i*i inférieur à 10
->>>         continue
->>>     # Continue renvoie à for tant que i*i < 10
->>>     # Sinon on passe à la suite
->>>     print("i*i supérieur à 10.")
+>>> # Soustraction
+>>> 3 - 2
+1
 ```
+
+```Python
+>>> # Multiplication
+>>> 3 * 2
+6
+```
+
+```Python
+>>> # Division
+>>> 3 / 2
+1.5
+```
+
+```Python
+>>> # Division entière
+>>> 3 // 2
+1
+```
+
+```Python
+>>> # Modulo
+>>> 3 % 2
+1
+```
+
+```Python
+>>> # Puissance
+>>> 3 ** 2
+9
+```
+
+Python suit les priorités classiques des mathématiques i.e, les multiplications sont prioritaires sur les additions, les opérations entre parenthèses sont prioritaires etc.
+
+```Python
+>>> 1 + 2 * 3
+7
+```
+
+```Python
+>>> (1 + 2) * 3
+9
+```
+
+
 
 ## Index et découpage <a name="index_decoupage"></a>
 
@@ -426,6 +403,33 @@ _Python_ permet de créer et de manipuler de nombreux objets qui rentrent dans l
 >>> x[1::2]
 [2,4]
 ```
+
+## Les conversions de type <a name="conversions"></a>
+
+En _Python_, il est possible de passer d'un type de données à un autre par conversion. Pour cela, on utilise des fonctions qui ont le nom du type cible(`int()`, `float()`, `complex()` et `str()`).
+
+```Python
+>>> var_float = 1.0 # c'est un float
+>>> var_int = int(var_float) # On converti vers le type int
+>>> var_float2 = float(var_int) # On converti vers le type float
+>>> chaine1 = '12'
+>>> chaine_to_int = int(chaine1)
+>>> var_int = 12
+>>> int_to_chaine = str(var_int)
+>>> annee = 2021
+>>> chaine = "Nous sommes dans la POE de "+str(annee)+"."
+>>> print(chaine)
+Nous sommes dans la POE de 2021.
+```
+
+Attention, il n'est pas possible de convertir n'importe quel type vers n'importe quel autre.
+L'exemple ci-dessous renverra une erreur.
+
+```Python
+>>> var_float = float("Hello world!")
+```
+
+
 
 ## Le Zen de Python (Tim Peters) <a name="zen_python"></a>
 
