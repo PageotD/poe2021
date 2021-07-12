@@ -365,3 +365,40 @@ La commande `break` va casser la boucle et en sortir. La commande `continue` va 
 >>>     # Sinon on passe à la suite
 >>>     print("i*i supérieur à 10.")
 ```
+
+## Index et découpage
+
+_Python_ permet de créer et de manipuler de nombreux objets qui rentrent dans la catégories des _collections_ tels que les listes, les tuples et les dictionnaires. Un item d'une collection est accessible par son index compris entre _0_ (le premier élément de la collection) et _n-1_ (n étant le nombre max d'éléments dans la collection). Un index négatif indique que le comptage par de la fin de la collection.
+
+```python
+>>> # Création d'une liste de 5 éléments
+>>> x = [1, 2, 3, 4, 5]
+>>> # Premier élément
+>>> x[0]
+1
+
+>>> # Second élément
+>>> x[1]
+2
+
+>>> # Dernier élément
+>>> x[-1]
+5
+
+>>> # Avant dernier élément
+>>> x[-2]
+4
+
+>>> # Du deuxième au dernier élément
+>>> x[1:]
+[2,3,4,5]
+
+>>> # Du deuxième au quatrième élément
+>>> # Le quatrième élément, correspondant à l'index 3 est exclu
+>>> x[1:3]
+[0,1,2] 
+
+>>> # Un élément sur deux à partir de l'élément 2 (index 1)
+>>> x[1::2]
+[2,4]
+```
