@@ -137,10 +137,44 @@ Les **liens** représentent une dépendance entre 2 objets (Application ou Trait
 | Conditionnel                  | Cyan          | L’Application « Application_6 » attend la bonne fin (statut TERMINE) de l’Application « Application_5 » ou la bonne fin du prédécesseur de l’Application « Application_5 » s’il y en a un et si « Application_5 » est non planifiée (statut NON PLANIFIE). |
 | Exclusif                      | Noir          | L’Application « Application_8 » attend la non planification (statut NON PLANIFIE) de l’Application « Application_7 ».|
 | En erreur                     | Rouge         | L’Application « Application_10 » attend obligatoirement la fin anormale (statut EN ERREUR) de l’Application « Application_9 ».|
+| | | |
+| Obligatoire valué| Bleu nuit | Le Traitement « trt_12 » attend obligatoirement la bonne fin (statut TERMINE) du Traitement « trt_11 » et un code retour valide, soit spécifié en tant que valeur, soit inclus dans une plage.|
+| Facultatif valué | Vert clair | Le Traitement « trt_14 » attend la fin (statut TERMINE, EN ERREUR) du Traitement « trt_13 » et un code retour valide, soit spécifié en tant que valeur, soit inclus dans une plage.|
+| Conditionnel valué | Cyan | Le Traitement « trt_16 » attend la bonne fin (statut TERMINE) du Traitement « trt_15 » ou la bonne fin du prédécesseur du Traitement « trt_15 » s’il y en a un, et si « trt_15 » est non planifié (statut NON PLANIFIE) et un code retour valide, soit spécifié en tant que valeur, soit inclus dans une plage.|
+| Exclusif valué | Noir | Sans objet. Un Traitement ne peut être à la fois non planifié et fournir un code retour .|
+| En erreur valué | Rouge | Le Traitement « trt_20 » attend obligatoirement la fin anormale (statut EN ERREUR) du Traitement « trt_19 » et un code retour valide, soit spécifié en tant que valeur, soit inclus dans une plage. |
 
 
+**Lien simple**: Une Application est dépendante d’une seule Application. Un Traitement est dépendant d’un seul Traitement.
 
+**Lien ET**: Une Application est dépendante de plusieurs Applications. Un Traitement est dépendant de plusieurs Traitements. Les Liens peuvent être de type différent. L’Application démarre lorsque tous ses Liens amont sont valides. Le Traitement démarre lorsque tous ses Liens amont sont valides.
 
+**Lien OU**: Une Application est dépendante de plusieurs Applications. Un Traitement est dépendant de plusieurs Traitements. Les Liens peuvent être de type différent. L’Application démarre lorsque l’un de ses Liens amont est valide. Le Traitement démarre lorsqu’un de ses Liens amont est valide.
+
+**Xlien** Un Xlien est une dépendance entre 2 objets dont le père est différent :
+- Un Traitement dépend d’une Application, dans le même Environnement
+- Une Application dépend d’un Traitement, dans le même Environnement
+- Un Traitement dépend d’un Traitement d’une autre Application, dans le même Environnement
+- Une Application dépend d’une Application d’un autre Environnement,
+- Une Application dépend d’un Traitement d’une Application d’un autre Environnement,
+- Un Traitement dépend d’une Application d’un autre Environnement,
+- Un Traitement dépend d’un Traitement d’une Application d’un autre Environnement.
+
+Le statut du Fils évolue en fonction du lien et du statut du Père:
+- **En attente**: le lien attentd un statut stable du père
+- **Valide**: le lien a reçu un statut stable du Père
+- **Déplanifié**: le lien n'autorise pas la poursuite en automatique du Fils
+
+L’opérateur logique appliqué entre les différentes **ressources** est un ET : toutes les Ressources doivent être valides pour le déclenchement de l’Application ou du Traitement. L’évaluation de la contrainte sur la Ressource, non valide par défaut, sera valide lorsque le test défini par « ressource opérateur [valeur] » sera vérifié.
+
+## La mise en exploitation
+
+Le Moteur ne traite que les objets mis en exploitation. La mise en exploitation concerne :
+- les Applications,
+- les Traitements,
+- les Liens.
+
+## Hierarchie
 
 |                  | Execution| Gestion du temps | Contrainte |
 |------------------|----------|------------------|------------|
