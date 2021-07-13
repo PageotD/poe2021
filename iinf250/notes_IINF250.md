@@ -121,6 +121,25 @@ Gestion des **logs en fin de Traitement** est intégrée à la Queue batch.et re
 - Un nombre de jours, au-delà duquel les logs sont purgés,
 - Un nombre d’occurrences, au-delà duquel les logs sont purgés.
 
+## L'ordonnancement
+
+Pour respecter une séquence de soumission, les Applications et/ou les Traitements sont ordonnancés en fonction de 3 types de contraintes : les Horaires, les Liens et les Ressources :
+- Les Horaires sont définis dans l’Application et le Traitement (onglet définition, caractéristiques « heure minimum de démarrage » et « heure maximum de démarrage »).
+- Un lien est une dépendance d’ordonnancement entre deux Objets de type Application et /ou Traitement. Il est représenté graphiquement par une flèche dont la couleur indique la nature de la dépendance (facultative, obligatoire…). Il constitue une contrainte pour l’objet successeur.
+- Une Ressource est une variable d’exploitation. Associée à une valeur, elle définit une contrainte pour le démarrage d’une Application et/ou d’un Traitement.
+
+Les **liens** représentent une dépendance entre 2 objets (Application ou Traitement). Par convention, le père correspond au prédécesseur direct, le Fils correspond au successeur direct, le grand-père correspond au père du père. Le Moteur confère aux Liens un statut en fonction du statut des Applications ou Traitements « Pères ».
+
+| Type de lien                  | Couleur       | Fonction |
+|-------------------------------|---------------|----------| 
+| Obligatoire                   | Bleu nuit     | L’Application « Application_2 » attend obligatoirement la bonne fin (statut TERMINE) de l’Application « Application_1 ».|
+| Facultatif                    | Vert clair    | L’Application « Application_4 » attend la fin (statut TERMINE, EN ERREUR, NON PLANIFIE ou DEPLANIFIE) de l’Application « Application_3 ».|
+| Conditionnel                  | Cyan          | L’Application « Application_6 » attend la bonne fin (statut TERMINE) de l’Application « Application_5 » ou la bonne fin du prédécesseur de l’Application « Application_5 » s’il y en a un et si « Application_5 » est non planifiée (statut NON PLANIFIE). |
+| Exclusif                      | Noir          | L’Application « Application_8 » attend la non planification (statut NON PLANIFIE) de l’Application « Application_7 ».|
+| En erreur                     | Rouge         | L’Application « Application_10 » attend obligatoirement la fin anormale (statut EN ERREUR) de l’Application « Application_9 ».|
+
+
+
 
 
 |                  | Execution| Gestion du temps | Contrainte |
