@@ -212,7 +212,7 @@ De la même façon
 22
 ```
 
-### Les types de données
+### Les types de données natifs
 
 Les principaux types de données en Python sont les suivant:
 - **int**: les entiers
