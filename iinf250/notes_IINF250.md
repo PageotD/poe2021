@@ -174,6 +174,8 @@ Le Moteur ne traite que les objets mis en exploitation. La mise en exploitation 
 - les Traitements,
 - les Liens.
 
+La mise en exploitation peut se faire de manière manuelle (immédiate) ou programmé (planifiée, bascule de date). Une réinitialisation annule la mise en exploitation des objets sélectionnés.
+
 ## Hierarchie
 
 |                  | Execution| Gestion du temps | Contrainte |
