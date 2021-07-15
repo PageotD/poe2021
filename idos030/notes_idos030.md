@@ -98,3 +98,156 @@ Save-Module 7Zip4Powershell -Path C:\temp\Module7Zip -Force
 **Bypass**: Il s'agit du mode "open bar" : il n'y a aucun contrôle, et tous les scripts, peu importe la provenance, seront exécutés sur la machine. A éviter en production.
 
 **Undefined**: Ce mode signifie "non défini" et donc c'est la politique par défaut qui va s'appliquer, ou celle du scope de niveau supérieur. Vous comprendrez mieux cette notion de scope et la politique Undefined en poursuivant la lecture de cet article.
+
+On peut connaître la sécurité appliquée grâce à la commande:
+```powershell
+Get-ExecutionPolicy
+```
+
+La sécurité peut être modifiée avec la commande:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy bypass
+```
+
+## 5-GET-COMMAND, GET-HELP
+
+```powershell
+### commandlet Get-command
+Get-Command -Name Set-Variable -ShowCommandInfo
+
+### commandlet Get-help
+get-help -Name Set-Variable -Detailed
+
+### Commandlet get-item
+get-childitem c:\windows -Filter *.exe
+
+### Command window
+# ==> bouton help + insertion commande pré-saisie
+```
+
+## 6-Variables
+
+```powershell
+####### Création de variables
+# Typer n'est pas nécessaire 
+$var1 = "Hello"
+
+# mais conseillé pour des variables servant pour des calculs par exemples
+[string]$var1 = "Hello"
+[int]$var2 = 2
+
+$global:var1 = "hello"
+
+New-Variable -Name var3 -Value "Hello" -Scope Script # le scope
+
+$cpt = Get-Random
+
+new-variable -name "var$cpt" -Value "Hello1"
+
+Set-Variable -Name var3 -Value "Hello2"
+
+Remove-Variable -name var3
+
+####### Utilisation des variables
+
+# Calcul
+[int]$chiffre1 = 10
+[int]$chiffre2 = 2
+
+$total = $chiffre1 + $chiffre2
+
+# Affichage
+write-host "Résultat: $total"
+write-host 'Résultat: $total'
+write-host "Le contenu de la variable `$total est: $total"
+
+# Fonctions mathématiques 
+[int]$chiffre1 = 100
+[int]$chiffre2 = 43.56
+
+$division = $chiffre1 / $chiffre2
+
+write-host $division
+
+[System.Math]::Round($division, 2)
+
+[System.Math]::Truncate($division)
+
+####### fonctions string
+$var = $null
+
+[string]::IsNullOrEmpty($var)
+
+$var = "hello"
+
+[string]::IsNullOrEmpty($var)
+
+### switch
+
+$var = "ok"
+
+switch ($var)
+{
+    test {
+        write-host "test"
+    }
+    ok {
+        write-host "OK"
+    }
+    default {
+        write-host "default"
+    }
+}
+```
+
+## 7-Commentaires
+
+```powershell
+### Commentaires
+
+Start-Sleep -Seconds 5 # Commentaire
+
+<# Début commentaires
+
+$tab = @("Test1","Test2")
+
+$tab += "Test3"
+
+$tab -= "Test1"
+
+[System.Collections.ArrayList]$tab2 = @()
+
+$tab2.add("Test1")
+$tab2.add("Test2")
+$tab2.add("Test3")
+
+$tab2
+
+$tab2.remove("Test2")
+
+$tab2
+#> 
+
+### Les Regions, case sensitive
+#region test
+
+$tab = @("Test1","Test2")
+
+$tab += "Test3"
+
+$tab -= "Test1"
+
+[System.Collections.ArrayList]$tab2 = @()
+
+$tab2.add("Test1")
+$tab2.add("Test2")
+$tab2.add("Test3")
+
+$tab2
+
+$tab2.remove("Test2")
+
+$tab2
+
+#endregion
+```
