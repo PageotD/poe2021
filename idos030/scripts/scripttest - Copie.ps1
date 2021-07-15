@@ -1,0 +1,1 @@
+add-content $env:USERPROFILE\desktop\log.txt -Value "le Script a fonctionné"
