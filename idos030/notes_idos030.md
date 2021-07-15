@@ -232,6 +232,8 @@ $tab2
 #> 
 
 ### Les Regions, case sensitive
+### #region <nom_de_region> permet de créer des blocs dans le scripts
+
 #region test
 
 $tab = @("Test1","Test2")
@@ -513,4 +515,658 @@ while (!(test-path "$env:USERPROFILE\desktop\pointeur.txt"))
     write-host ...
     start-sleep -Seconds 1
 }
+```
+
+## 12-Tableaux
+
+```powershell
+####### Tableaux
+
+$tab = @("Test1","Test2")
+
+$tab += "Test3"
+
+$tab -= "Test1"
+
+[System.Collections.ArrayList]$tab2 = @()
+
+$tab2.add("Test1")
+$tab2.add("Test2")
+$tab2.add("Test3")
+
+$tab2
+
+$tab2.remove("Test2")
+
+$tab2
+
+####### Tableaux complexes
+
+[System.Collections.ArrayList]$tab3 = @()
+
+$item = New-Object -TypeName psobject -Property ([Ordered]@{
+    Marque = "Renault"
+    Modèle = "Megane"
+    Année = "2017"
+})
+
+$tab3.add($item)
+
+$item = New-Object -TypeName psobject -Property ([Ordered]@{
+    Marque = "Seat"
+    Modèle = "Leon"
+    Année = "2013"
+})
+
+$tab3.add($item)
+
+$item = New-Object -TypeName psobject -Property ([Ordered]@{
+    Marque = "Peugeot"
+    Modèle = "206"
+    Année = "1998"
+})
+
+$tab3.add($item)
+
+# Ajout d'une propriété à un item
+
+$tab3 | where {$_.modèle -eq "Megane"} | Add-Member -MemberType NoteProperty -Name "Puissance" -Value "205 Cv"
+$tab3 | where {$_.modèle -eq "Leon"} | Add-Member -MemberType NoteProperty -Name "Puissance" -Value "184 Cv"
+
+$tab3 | foreach {
+    write-host "Il s'agit d'une voiture de marque $($_.marque), modèle: $($_.modèle). Puissance référencée: $($_.puissance)"
+}
+
+foreach ($voiture in $tab3){
+    write-host "Il s'agit d'une voiture de marque $($voiture.marque), modèle: $($voiture.modèle). Puissance référencée: $($voiture.puissance)"
+}
+
+# condition
+
+foreach ($voiture in $tab3){
+
+    if (!($voiture.puissance))
+    {
+        write-host "Il s'agit d'une voiture de marque $($voiture.marque), modèle: $($voiture.modèle). Puissance référencée: non référencée"
+    }
+    else
+    {
+        write-host "Il s'agit d'une voiture de marque $($voiture.marque), modèle: $($voiture.modèle). Puissance référencée: $($voiture.puissance)"
+    }
+}
+
+foreach ($voiture in $tab3){
+    write-host "Il s'agit d'une voiture de marque $($voiture.marque), modèle: $($voiture.modèle). Puissance référencée: $(if(!($voiture.puissance)){"puissance non référencée"}else{$voiture.puissance})"
+}
+
+#### manipulation d'un tableau
+
+## compteur
+
+$tab3.count
+
+## recherche
+
+$tab3.Contains("Seat")
+
+$($tab3.marque).Contains("Seat") #<=== Case sensitive 
+
+$tab3.marque -match "seat"
+
+$tab3 | ? {$_.Marque -match "Seat"}
+
+$tab3.IndexOf($($tab3 | ? {$_.Marque -match "Peugeot"}))
+
+$tab3[1]
+
+## Insertion a un index spécifique
+
+$item = New-Object -TypeName psobject -Property ([Ordered]@{
+    Marque = "Dacia"
+    Modèle = "Duster"
+    Année = "2018"
+    Puissance = "130"
+})
+
+$tab3.Insert(1, $item)
+
+## traduction à la volée 
+
+$tab3 | foreach {
+    $_ | select @{Name = 'trademark'; Expression = {$_.Marque}}, @{Name = 'Model'; Expression = {$_."Modèle"}}, @{Name = 'HP'; Expression = {$_.puissance}}
+}
+
+## copie 
+
+[System.Collections.ArrayList]$tab4 = $tab3 | where {
+    $_.marque -ne "Peugeot"
+}
+
+## comparaison
+
+$test = Compare-Object -ReferenceObject $tab3 -DifferenceObject $tab4 -IncludeEqual
+
+write-host "La voiture qui a été supprimée est la suivante: $(($test | where {$_.SideIndicator -ne "=="}).InputObject."modèle")"
+
+## changement valeurs
+
+$tab3[2].Modèle = 308
+$tab3[2].Année = 2018
+$tab3[2].Puissance = "150 Cv"
+
+## suppression d'objets
+
+$($tab3 | ? {$_.Marque -in ("Seat","Renault")}) | % {
+    $tab3.remove($_)
+}
+
+####### Function
+
+# parameters: https://social.technet.microsoft.com/wiki/contents/articles/15994.powershell-advanced-function-parameter-attributes.aspx
+#             https://buzut.fr/la-puissance-des-regex/
+
+function ModifTab {
+    param (
+        [parameter(Mandatory = $true)]
+        [ValidateLength(0,10)]
+        [ValidateNotNullOrEmpty()]
+        [ValidatePattern("\D+$")] # l'argument ne peut pas contenir de chiffre
+        [string]$marque,
+
+        [parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$modele,
+
+        [ValidateNotNullOrEmpty()]
+        [string]$puissance = "non renseignée"
+    )
+        
+    [System.Collections.ArrayList]$tab3 = @()
+
+    $item = New-Object -TypeName psobject -Property ([Ordered]@{
+        Marque = $marque
+        Modèle = $modele
+        Puissance = $puissance
+    })
+
+    return $item
+}
+
+[System.Collections.ArrayList]$tab = @()
+
+$tab.Add($(ModifTab -marque "Renault" -modele "Megane" -puissance "205 Cv"))
+$tab.Add($(ModifTab -marque "Seat" -modele "Leon" -puissance "184 Cv"))
+$tab.Add($(ModifTab -marque "Peugot" -modele "206"))
+
+Function Traitement{
+    param (
+        [parameter(Mandatory = $true,
+        ValueFromPipeline=$true)]
+        $item
+    )
+
+    write-output "La voiture n°$global:cpt est un(e) $($item."modèle") de la marque $($item.marque)"
+    $cpt++
+    
+}
+
+[int]$cpt = 1
+
+$tab | %{
+    $_ | Traitement
+}
+
+#### avec variable globale
+
+Function Traitement2{
+    param (
+        [parameter(Mandatory = $true,
+        ValueFromPipeline=$true)]
+        $item
+    )
+
+    write-output "La voiture n°$global:cpt2 est un(e) $($item."modèle") de la marque $($item.marque)"
+    $global:cpt2++
+    
+}
+
+[int]$global:cpt2 = 1
+
+$tab | %{
+    $_ | Traitement2
+}
+```
+
+## 13-Gestion des fichiers
+
+```powershell
+### gestion fichiers
+
+new-item -Path C:\temp -Name Fichier.txt -ItemType File -Value "Demonstration Powershell`r`n"
+
+rename-item -Path "C:\temp\Fichier.txt" -NewName "Fichier2.txt"
+
+add-content "C:\temp\Fichier2.txt" -Value "..."
+
+Copy-item -Path "C:\temp\Fichier2.txt" -Destination "C:\temp\Fichier.txt"
+
+remove-item -Path "C:\temp\Fichier2.txt"
+
+### gestion ACL
+
+$SID = $([wmi] "win32_userAccount.Domain='EU',Name='ng58e90'").sid
+ 
+$acl = get-acl "C:\temp\Fichier.txt"
+
+$acl.SetAccessRuleProtection($True, $True)
+
+$colRights = [System.Security.AccessControl.FileSystemRights]"Fullcontrol" 
+$objType =[System.Security.AccessControl.AccessControlType]::Allow 
+$Userapp = (New-Object System.Security.Principal.SecurityIdentifier($SID))
+$ace = new-object security.accesscontrol.filesystemaccessrule($userapp, $colRights, $objType)
+$acl.addaccessrule($ace)
+
+Set-Acl -Path "C:\temp\Fichier.txt" -AclObject $acl
+
+$currentacl = get-acl "C:\temp\Fichier.txt"
+$objUser = $Userapp.Translate( [System.Security.Principal.NTAccount])
+
+$acldelete = $null
+
+foreach ($item in $currentacl.access) {
+    if ($item.IdentityReference -like $objUser.value) {
+        $acldelete = $item
+    }
+}
+
+if ($acldelete -ne $null)
+{
+    $currentacl.removeaccessrule($acldelete)
+
+    if ($?) {
+        $deletion = $true
+    }
+    else
+    {
+        $deletion = $false
+    }
+    set-acl "C:\temp\Fichier.txt" $currentacl
+}
+```
+
+## 14-Gestion des clés de registre
+
+```powershell
+### clé de registre
+
+get-item HKLM:\SOFTWARE\AirbusBDM ### affiche la clé de registre et ses valeurs
+
+New-PSDrive -Name HKCU -PSProvider Registry -Root HKEY_CURRENT_USER
+
+get-item HKCU:\Software\7-Zip ### ne renvoie pas un tableau exploitable
+
+New-ItemProperty HKCU:\Software\7-Zip -Name "test" -Value 0 -PropertyType DWORD
+
+Remove-ItemProperty -Path HKCU:\Software\7-Zip -Name "test" -Force
+
+Get-ChildItem -Path HKCU:\Software\7-Zip ### affiche les clés de registre enfant et leur propriétés
+
+Get-ChildItem -Path HKCU:\Software\7-Zip -Recurse ### même chose mais récursive
+
+Get-ItemPropertyValue HKCU:\Software\7-Zip -Name Lang ### permet d'obtenir la valeur d'une propriété bien précise
+
+$(get-itemproperty HKCU:\Software\7-Zip)."$($(get-itemproperty HKCU:\Software\7-Zip | Get-Member | ?{$_.name -match "^Lang$"}).name)"
+
+### USB 
+
+get-childitem registry::hkey_local_machine\SYSTEM\CurrentControlSet\Enum\USB -Recurse | % {
+    $value = $(Get-ItemPropertyValue -Path "registry::$($_.name)" -Name DeviceDesc -ErrorAction SilentlyContinue).tostring()
+}
+```
+
+## 15-Win Events
+
+```powershell
+### command events
+
+# Get-EventLog, facile a utiliser sur les journaux classiques et permet de filtrer rapidement (EntryType, Source). Limité malgré tout
+
+Get-EventLog -LogName System -Newest 10
+
+
+# Get-WinEvent plus compliquée à utiliser mais bien plus complète
+
+Get-WinEvent -LogName security | where {$_.Id -eq 4634} # pas de filtre, tout est envoyé dans le pipe ==> traitement très long
+
+Get-WinEvent -FilterHashtable @{logname='Security'; id=4634} # requête filtrée mais basique.
+# pour savoir sur quels autres critères que "ID" on peut effectuer un filtre :
+
+$event = Get-WinEvent -FilterHashtable @{logname='Security'; id=4634} | select -First 1 # on récupère un event
+$event | Get-Member -MemberType Property # on accède ici à toutes les propriétés avec lesquelles nous pourrons intéragir 
+
+# Filtre beaucoup plus compliqué à mettre en place mais bien plus précis et rapide 
+
+[xml]$filter = @"
+<QueryList>
+  <Query Id="0" Path="Microsoft-Windows-WMI-Activity/Operational">
+    <Select Path="Microsoft-Windows-WMI-Activity/Operational">*[System[(EventID=5857)]] and *[UserData[Operation_StartedOperational[ProviderPath="%SystemRoot%\system32\tscfgwmi.dll"]]]</Select>
+  </Query>
+</QueryList>
+"@
+ 
+Get-WinEvent -FilterXml $filter
+
+# la matrice du filtre peut se créer grâce à l'eventviewer et se compléter en se basant sur l'ossature XML d'un type d'event souhaité
+```
+
+## 16-Exécution des process
+
+```powershell
+### start process
+
+$process = Start-Process -FilePath C:\Windows\System32\cmd.exe -ArgumentList "/c echo test" -Wait -PassThru -RedirectStandardOutput stdout.txt
+
+write-host $process.ExitCode
+
+# en tant qu'administrateur 
+
+$process2 = Start-Process -FilePath C:\Windows\System32\cmd.exe  -ArgumentList "/c echo test" -Wait -PassThru -Verb Runas
+
+# avec le "Call operator" & 
+
+$test = & C:\Windows\System32\cmd.exe /c echo test
+
+### stdout
+
+$pinfo = New-Object System.Diagnostics.ProcessStartInfo
+# $pinfo = [System.Diagnostics.ProcessStartInfo]::new()
+$pinfo.FileName = "cmd.exe"
+$pinfo.RedirectStandardError = $true
+$pinfo.RedirectStandardOutput = $true
+$pinfo.UseShellExecute = $false
+$pinfo.Arguments = "/c ping 4.4.4.4." # remplacer par "pong" pour tester $stderr
+$p = New-Object System.Diagnostics.Process
+$p.StartInfo = $pinfo
+$p.Start() | Out-Null
+$stdout = $p.StandardOutput.ReadToEnd()
+$stderr = $p.StandardError.ReadToEnd()
+$p.WaitForExit()
+```
+
+## 17-Gestion des dates
+
+```powershell
+### date
+
+get-date
+
+$now = [datetime]::Now
+
+$anniversary = get-date -Date "16/04/1987"
+
+get-date $anniversary -Format "dd/MM/yy"
+
+$anniversary = [datetime]::new("1987","04","16")
+
+$age = $now - $anniversary
+
+$years = [System.Math]::round($age.Days / 365, 2)
+
+$months = [System.Math]::round(12 * $($($years -split "\.")[1] / 100), 2)
+
+write-host "Je suis né il y a $([System.Math]::Truncate($years)) ans et $([System.Math]::Truncate($months)) mois"
+
+# les ticks, très pratiques pour manipuler des dates au format différent ou bien 
+
+$date = get-date
+$date.Ticks
+
+# Convertion d'une date issue de WMI :
+
+$ProcessTest = Get-WmiObject -Query "select * from win32_process" | select -First 1 # recupère les informations sur un process en cours d'exécution dans l'instance Win32_Process
+$ProcessTest.CreationDate
+
+$dateConverted = [System.Management.ManagementDateTimeConverter]::ToDateTime($ProcessTest.CreationDate)
+
+$date -gt $dateConverted
+```
+
+## 18-API et DLL
+
+```powershell
+### Intéraction avec les API Windows
+# Aide :
+# https://en.wikipedia.org/wiki/Microsoft_Windows_library_files#:~:text=DLL,-Further%20information%3A%20Windows&text=information%3A%20Windows%20USER-,USER32.,the%20Windows%20look%20and%20feel.
+
+add-type @"
+using System;
+using System.Runtime.InteropServices;
+namespace FormationPowerShell {
+    public class Fonctions {
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+        public static void ShowWindow(IntPtr hWnd) {
+            ShowWindowAsync(hWnd,5);
+        }
+        public static void HideWindow(IntPtr hWnd) {
+            ShowWindowAsync(hWnd,0);
+        }
+    }
+}
+"@
+
+$ID = $(Get-Process -Name cmd).MainWindowHandle
+
+[FormationPowerShell.Fonctions]::HideWindow($id)
+
+[FormationPowerShell.Fonctions]::ShowWindow($id)
+
+### Intéraction avec des DLL .NET
+# connaitre la liste des functions présentes dans la DLL
+
+$asm = [System.Reflection.Assembly]::LoadFile("C:\Users\cblacher\Desktop\Formation PowerShell\sccmclictr.automation.dll")
+$asm.GetTypes() | select Name, Namespace | sort Namespace | ft -groupby Namespace
+$asm.GetTypes() | ?{$_.IsPublic} | select Name, Namespace | sort Namespace | ft -groupby Namespace
+$asm.GetTypes() | ?{$_.IsPublic} | select @{n=‘Members’;e={$_.GetMembers(‘Public,Instance’)}} | select -expand Members -ea 0 | ? {!$_.IsSpecialName} | measure-object
+
+#utiliser une des fonctions
+
+$asm.Modules.Assembly.GetName().name
+
+#[sccmclictr.automation.functions]
+```
+
+## 19-Signature des scripts
+
+```powershell
+$pass = Read-Host 'Mot de passe à utiliser?' -AsSecureString
+$duree = Read-Host 'Durée en année?'
+$subject=Read-Host 'sujet du certificat?'
+ 
+# on se place au niveau machine
+Set-Location Cert:\LocalMachine\My
+  
+#un certificat du même sujet existe ?
+$thumbprint =Get-ChildItem | Where-Object {$_.subject -match $subject}  | Select-Object -first 1 | select -ExpandProperty Thumbprint
+if($thumbprint -ne $null)
+{
+    Write-Host "deleting old one "$thumbprint;
+    Remove-Item -Path $thumbprint;
+}
+ 
+# création d'un nouveau certificat
+New-SelfSignedCertificate -NotAfter (Get-Date).AddYears($duree) -TextExtension ('2.5.29.37={text}1.3.6.1.5.5.7.3.3','2.5.29.19={text}Subject Type:End Entity') -Type Custom -Subject $subject -KeyUsage DigitalSignature -FriendlyName "Certificat de signature de code" -CertStoreLocation "Cert:\LocalMachine\My"
+ 
+# récupération du thumbprint du certifcat créé
+$thumbprint = Get-ChildItem | Where-Object {$_.subject -match $subject} | Select-Object -first 1 | select -ExpandProperty Thumbprint;
+ 
+#Export du PFX
+Export-PfxCertificate -cert $thumbprint -Password $pass -FilePath $env:USERPROFILE\desktop\MON_CERTIFICAT.pfx
+
+# installation du certificat dans "ordinateur local" puis dans le magasin "Autorités de certification racines de confiance"
+
+### signature du script 
+
+$cert = Get-ChildItem Cert:\LocalMachine\root -CodeSigningCert
+
+# exécution du script pour test 1
+
+& "$env:USERPROFILE\Desktop\formation powershell\scripttest.ps1"
+
+Set-ExecutionPolicy -ExecutionPolicy AllSigned # change la politique de sécurité pour n'exécuter QUE les scripts signés
+
+# rejouer le script
+
+& "C:\temp\tableau\scripttest.ps1"
+
+Set-AuthenticodeSignature "C:\temp\tableau\scripttest.ps1"  -Certificate $cert # signature du script
+
+# rejouer le script
+
+& "D:\Formation PowerShell\scripttest.ps1"
+
+# ouvrir mmc.exe en tant qu'administrateur (pour accéder à ordinateur local) et gérer manullement le certificat
+
+# rejouer le script 
+
+& "$env:USERPROFILE\Desktop\formation powershell\scripttest.ps1"
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+# rejouer le script 
+
+& "$env:USERPROFILE\Desktop\formation powershell\scripttest.ps1"
+```
+
+## 20- Création d'utilisateurs locaux et crédentials
+
+```powershell
+Get-LocalUser # liste les utilisateurs locaux
+
+Get-LocalGroup # liste les groupes locaux
+
+$PWD = ConvertTo-SecureString -AsPlainText Formation@1234 -Force # convertion du MDP en Secure String
+
+New-LocalUser -AccountNeverExpires -Description "Compte Admin local" -Name AdminLocal -Password $PWD -PasswordNeverExpires
+
+Get-LocalUser -Name Adminlocal # vérification
+
+Add-LocalGroupMember -Group Administrateurs -Member Adminlocal -WhatIf # ajoute le compte créé au groupe Administrateur
+
+Start-Process powershell.exe -ArgumentList "-command `"add-content c:\temp\log.txt -value `$env:username" -Credential (Get-Credential) -WindowStyle Hidden # lancement d'un process avec les droits du compte créé
+```
+
+## 21-Gestion des services et gridview
+
+```powershell
+Get-Service # liste tous les services
+
+Get-Service -Name EventLog # affiche les informations pour un service donné
+
+# affichage des services dans un tableau
+
+Get-Service | select -Property "Status", "Name", "DisplayName" | Out-GridView
+
+#Start-Service
+#Stop-Service
+#Restart-Service
+#New-Service
+
+# intérractions avec le tableau :
+
+for ($i = 0; $i -lt 15; $i++)
+{
+    new-item -Path "C:\temp" -ItemType File -Name "Fichier-N$i.txt" -Force
+}
+
+$files = Get-ChildItem -Path C:\Temp | select @{n="Nom-du-fichier";e={$_.Name}} | Out-GridView -Title "Gestion des Fichiers" -OutputMode Multiple
+
+$files | % {
+    rename-item -Path "C:\temp\$($_.'Nom-du-fichier')" -NewName "Formation-$($_.'Nom-du-fichier')"
+}
+```
+
+## 22-WMI
+
+```powershell
+# Ouvrir WMI-Explorer
+
+$processComplet = Get-WmiObject -Query "Select * from Win32_process where Name LIKE '%Powershell_ISE%'" | select -First 1
+
+$processLight = Get-WmiObject -Query "Select * from Win32_process where Name LIKE '%Powershell_ISE%'" | select -First 1 -Property Name, ProcessID
+
+$processComplet.GetOwner()
+
+$processLight.GetOwner() # n'existe pas
+
+Get-WmiObject -Class "Win32_Process" -List | select Methods -ExpandProperty Methods
+
+#https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/create-method-in-class-win32-process
+
+$process = Invoke-WmiMethod -Class "Win32_Process" -Name Create -ArgumentList ("cmd.exe","C:\windows\system32")
+
+# https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/terminate-method-in-class-win32-process
+
+$cmd = Get-WmiObject -Query "Select * from Win32_process where  ProcessID = '$($process.ProcessId)'" | select -First 1
+
+$cmd.Terminate()
+```
+
+## 23-Export/import CLIXML/CSV
+
+```powershell
+# Export de la donnée
+
+$process = Get-Process | select Name, ID, CPU
+
+$process | Export-Clixml C:\temp\process.xml
+
+# Import dans une autre session 
+
+$OldProcess = Import-Clixml C:\temp\process.xml
+
+$OldProcess | Export-Csv -Path C:\temp\process.csv -Delimiter ";"
+```
+
+## 24-COM Objects
+
+```powershell
+### COM Objects
+#
+# https://docs.microsoft.com/fr-fr/powershell/scripting/samples/creating-.net-and-com-objects--new-object-?view=powershell-7.1
+
+# envoie d'un email grâce au COM Object Outlook
+
+Add-Type -assembly "Microsoft.Office.Interop.Outlook"
+add-type -assembly "System.Runtime.Interopservices"
+try
+{
+    $outlook = [Runtime.Interopservices.Marshal]::GetActiveObject('Outlook.Application')
+    $outlookWasAlreadyRunning = $true
+}
+catch
+{
+    try
+    {
+        $Outlook = New-Object -comobject Outlook.Application
+        $outlookWasAlreadyRunning = $false
+    }
+    catch
+    {
+        write-host "You must exit Outlook first."
+        exit
+    }
+}
+
+$Mail = $Outlook.CreateItem(0)
+$Mail.To = "christophe.blacher@capgemini.com"
+$Mail.Subject = "Mail test Formation PowerShell"
+$Mail.Body = "Ceci est un mail de test afin d'essayer l'envoie d'un email via PowerShell en utilisant l'objet COM Outlook"
+$Mail.Send()
+
+# Tips, lister tous les objest COM disponibles
+
+Get-ChildItem HKLM:\Software\Classes -ErrorAction SilentlyContinue | Where-Object {
+   $_.PSChildName -match '^\w+\.\w+$' -and (Test-Path -Path "$($_.PSPath)\CLSID")
+} | Select-Object -ExpandProperty PSChildName
 ```
