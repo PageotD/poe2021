@@ -4,6 +4,9 @@ _IINF250_
 
 L'ordonnancement des tâches informatiques est la planification et la synchronisation des travaux batch, quelle que soit leur nature et quels que soient les systèmes d'exploitation.
 
+- Prioriser les tâches, avec des conditions afin de gérer et optimiser les décisions, *i.e.* une tâche ne sera lancée que si des conditions précises sont atteintes (si il y a une dépendance avec une tache antérieure, elle ne pourra pas être lancée)
+- L’ordonnancement, ne fait pas que la planification, mais execute des tâches: cherche des scripts sur un serveur, lance des logiciels par exemple. Si on a besoin d’extraire et envoyer, on fera un job pour chaque action.
+
 ## Domaine d'exploitation
 
 Le domaine d'exploitation est l'entité de niveau supérieur de Visual TOM. Il regroupe l'ensemble des défintions et des identifiants de la production.
